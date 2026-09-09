@@ -1,4 +1,6 @@
+// custom popunder via smartlink
 document.addEventListener('click', () => {
+  return; //later
   const now = Date.now();
   const popts = localStorage.getItem('POPTS');
   
@@ -18,11 +20,5 @@ document.addEventListener('click', () => {
   }
 });
 
-setTimeout(() => {
-  const script = document.createElement('script');
-  script.setAttribute('data-cfasync', 'false');
-  script.async = true;
-  script.type = 'text/javascript';
-  script.src = '//cinchaslack.com/gxuFyX1L9mN7XB/150541';
-  document.body.appendChild(script);
-}, 120000);
+// register the banner placements
+// later
