@@ -1,6 +1,5 @@
 // custom popunder via smartlink
 document.addEventListener('click', () => {
-  return; //later
   const now = Date.now();
   const popts = localStorage.getItem('POPTS');
   
