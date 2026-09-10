@@ -11,7 +11,7 @@ document.addEventListener('click', () => {
   if (allowed) {
     localStorage.setItem('POPTS', now);
     
-    const popWin = window.open('https://ke.ducatflapper.com/ihCNqMxCE4lHFrEfK/151100', '_blank');
+    const popWin = window.open('https://bony-teaching.com/wEV12y', '_blank');
     
     if (popWin) {
       popWin.blur();
@@ -21,4 +21,14 @@ document.addEventListener('click', () => {
 });
 
 // register the banner placements
-// later
+const appendScript = (id, src) => {
+  delete window.fab238;
+  const s = document.createElement('script');
+  s.src = src;
+  s.async = true;
+  s.referrerPolicy = 'no-referrer-when-downgrade';
+  document.getElementById(id)?.appendChild(s);
+};
+
+appendScript('acLeft', '//untimely-hello.com/b.XaVMs/d/GolN0UYTW/cz/peHmK9/u_ZhUYlPkpPFTucM0/MbDkMf2PNSTEcRtFNcz/QgwMM/zQYQ2xMaQe');
+appendScript('acRight', '//untimely-hello.com/bBX.VGscdEG/lR0OYnW/cy/Pecm_9LuAZ/UylJk/PaTsc/0/M/DBMx5mNLjfUBt/N/zdQlw/Mdzskj2IO_QA');
