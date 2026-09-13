@@ -3,7 +3,7 @@ document.addEventListener('click', () => {
   const now = Date.now();
   const popts = localStorage.getItem('POPTS');
   
-  if (popts && (now - popts < 90000)) return;
+  if (popts && (now - popts < 120000)) return;
 
   const allowed = typeof isOpiumMenu === 'function' ? isOpiumMenu() : true;
 
