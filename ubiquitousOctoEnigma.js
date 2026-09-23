@@ -1,33 +1,20 @@
-// custom popunder via smartlink
-document.addEventListener('click', () => {
-  const now = Date.now();
-  const popts = localStorage.getItem('POPTS');
-  
-  if (popts && (now - popts < 120000)) return;
+const script = document.createElement('script');
+script.id = 'aclib';
+script.type = 'text/javascript';
+script.src = getBase() + '/aclib.js';
 
-  const allowed = typeof isOpiumMenu === 'function' ? isOpiumMenu() : true;
-
-  if (allowed) {
-    localStorage.setItem('POPTS', now);
-    
-    const popWin = window.open('https://bony-teaching.com/wEV12y', '_blank');
-    
-    if (popWin) {
-      popWin.blur();
-      window.focus();
-    }
-  }
-});
-
-// register the banner placements
-const appendScript = (id, src) => {
-  delete window.fab238;
-  const s = document.createElement('script');
-  s.src = src;
-  s.async = true;
-  s.referrerPolicy = 'no-referrer-when-downgrade';
-  document.getElementById(id)?.appendChild(s);
+// when ad lib loads we run our zones
+script.onload = () => {
+  // 2 banners per ref
+    ["acLeft", "acRight"].forEach(id => aclib.runBanner({
+        zoneId: "12196570",
+        renderIn: "#" + id
+    }))
+  // gated popunder, like only open when on opium page not game or proxy yk
+    aclib.runPop({
+        zoneId: "12196614",
+        popGate: () => isOpiumMenu(),
+    });
 };
 
-appendScript('acLeft', '//untimely-hello.com/b.XaVMs/d/GolN0UYTW/cz/peHmK9/u_ZhUYlPkpPFTucM0/MbDkMf2PNSTEcRtFNcz/QgwMM/zQYQ2xMaQe');
-appendScript('acRight', '//untimely-hello.com/bBX.VGscdEG/lR0OYnW/cy/Pecm_9LuAZ/UylJk/PaTsc/0/M/DBMx5mNLjfUBt/N/zdQlw/Mdzskj2IO_QA');
+document.head.appendChild(script);
