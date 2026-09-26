@@ -5,11 +5,11 @@ script.src = getBase() + '/aclib.js';
 
 // when ad lib loads we run our zones
 script.onload = () => {
-  // 2 banners per ref
-    ["acLeft", "acRight"].forEach(id => aclib.runBanner({
+  // 2 banners per ref, remove for now (make no money, annoyying)
+    /*["acLeft", "acRight"].forEach(id => aclib.runBanner({
         zoneId: "12196570",
         renderIn: "#" + id
-    }))
+    }))*/
   // gated popunder, like only open when on opium page not game or proxy yk
     aclib.runPop({
         zoneId: "12196614",
