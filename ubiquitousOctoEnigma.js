@@ -1,10 +1,11 @@
-const script = document.createElement('script');
-script.id = 'aclib';
-script.type = 'text/javascript';
-script.src = getBase() + '/aclib.js';
+// primary, popunder
+const aca = document.createElement('script');
+aca.id = 'aclib';
+aca.type = 'text/javascript';
+aca.src = getBase() + '/aclib.js';
 
 // when ad lib loads we run our zones
-script.onload = () => {
+aca.onload = () => {
   // 2 banners per ref, remove for now (make no money, annoyying)
     /*["acLeft", "acRight"].forEach(id => aclib.runBanner({
         zoneId: "12196570",
@@ -17,4 +18,16 @@ script.onload = () => {
     });
 };
 
-document.head.appendChild(script);
+document.head.appendChild(aca);
+
+// secondary, banner
+const pon = document.createElement('script');
+pon.type = 'text/javascript';
+pon.src = "//oc.trifledloto.com/tPqp9yZ3tG2FI1/152290";
+
+// when ad lib loads we run our zones
+pon.onload = () => {
+    G_152290_API.show(Math.random() < 0.5 ? "#acLeft" : "#acRight");
+};
+
+document.head.appendChild(pon);
