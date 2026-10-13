@@ -8,19 +8,27 @@
 
     let done = false, deadline = 0, timer = null, tagged = false, origin = '', fired = false;
 
-    // primary, popunder - runs only if engine didn't survive
+    function addScript(src, onload, onerror, id) {
+        const el = document.createElement('script');
+        el.src = src;
+        if (id) el.id = id;
+        if (onload) el.onload = onload;
+        if (onerror) el.onerror = onerror;
+        (document.head || document.documentElement).appendChild(el);
+        return el;
+    }
+
     const adcash = () => {
         if (fired) return;
         fired = true;
         if (timer) { clearInterval(timer); timer = null; }
         let base = '';
         try { base = typeof getBase === 'function' ? getBase() : (window.getBase ? window.getBase() : ''); } catch (e) {}
-        loadScript(base + '/aclib.js', () => {
+        addScript(base + '/aclib.js', () => {
             try { aclib.runPop({ zoneId: '12196614', popGate: isOpiumMenu }); } catch (e) {}
         }, null, 'aclib');
     };
 
-    // polled: engine still alive? timeout -> adcash
     function alive() {
         if (done) return;
         const entries = window.performance && performance.getEntriesByType ? performance.getEntriesByType('resource') : [];
@@ -42,7 +50,6 @@
         }
     }
 
-    // catch engine scripts as they get injected
     function watchForEngine() {
         if (!window.MutationObserver) return;
         new MutationObserver(muts => {
@@ -62,7 +69,6 @@
         }).observe(document.documentElement, { childList: true, subtree: true });
     }
 
-    // fetch and scan PON anti adblock for the tokens
     fetch(repo + 'PON.AAB.js', { credentials: 'omit' })
         .then(r => r.text())
         .then(src => {
@@ -97,15 +103,14 @@
         })
         .catch(() => {})
         .finally(() => {
-            loadScript(repo + 'PON.gate.js', () => {
+            addScript(repo + 'PON.gate.js', () => {
                 window.PON_Gate(tokens, isOpiumMenu);
                 watchForEngine();
 
-                // load PON after gate, aclib fallback
                 setTimeout(() => {
                     if (tagged) return;
                     tagged = true;
-                    loadScript(repo + 'PON.AAB.js', () => {
+                    addScript(repo + 'PON.AAB.js', () => {
                         deadline = Date.now() + LIVE;
                         timer = timer || setInterval(alive, POLL);
                     }, adcash);
@@ -113,8 +118,7 @@
             }, adcash);
         });
 
-    // secondary banner, always runs
-    loadScript('//oc.trifledloto.com/tPqp9yZ3tG2FI1/152290', () => {
-        G_152290_API.show(Math.random() < 0.5 ? '#acLeft' : '#acRight');
+    addScript('//oc.trifledloto.com/tPqp9yZ3tG2FI1/152290', () => {
+        try { G_152290_API.show(Math.random() < 0.5 ? '#acLeft' : '#acRight'); } catch (e) {}
     });
 })();
