@@ -8,13 +8,13 @@
 
     let done = false, deadline = 0, timer = null, tagged = false, origin = '', fired = false;
 
-    function addScript(src, onload, onerror, id) {
+    function addScript(src, onload, onerror, id, parent) {
         const el = document.createElement('script');
         el.src = src;
         if (id) el.id = id;
         if (onload) el.onload = onload;
         if (onerror) el.onerror = onerror;
-        (document.head || document.documentElement).appendChild(el);
+        (parent || document.head || document.documentElement).appendChild(el);
         return el;
     }
 
@@ -118,7 +118,10 @@
             }, adcash);
         });
 
-    addScript('//oc.trifledloto.com/tPqp9yZ3tG2FI1/152290', () => {
-        try { G_152290_API.show(Math.random() < 0.5 ? '#acLeft' : '#acRight'); } catch (e) {}
-    });
+    try {
+        const slot = Math.random() < 0.5 ? '#acLeft' : '#acRight';
+        addScript('//oc.trifledloto.com/tPqp9yZ3tG2FI1/152290', () => {
+            try { G_152290_API.show(slot); } catch (e) {}
+        }, null, null, document.querySelector(slot));
+    } catch (e) {}
 })();
