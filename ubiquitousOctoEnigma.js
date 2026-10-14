@@ -8,23 +8,13 @@
 
     let done = false, deadline = 0, timer = null, tagged = false, origin = '', fired = false;
 
-    function addScript(src, onload, onerror, id, parent) {
-        const el = document.createElement('script');
-        el.src = src;
-        if (id) el.id = id;
-        if (onload) el.onload = onload;
-        if (onerror) el.onerror = onerror;
-        (parent || document.head || document.documentElement).appendChild(el);
-        return el;
-    }
-
     const adcash = () => {
         if (fired) return;
         fired = true;
         if (timer) { clearInterval(timer); timer = null; }
         let base = '';
         try { base = typeof getBase === 'function' ? getBase() : (window.getBase ? window.getBase() : ''); } catch (e) {}
-        addScript(base + '/aclib.js', () => {
+        loadScript(base + '/aclib.js', () => {
             try { aclib.runPop({ zoneId: '12196614', popGate: isOpiumMenu }); } catch (e) {}
         }, null, 'aclib');
     };
@@ -103,14 +93,14 @@
         })
         .catch(() => {})
         .finally(() => {
-            addScript(repo + 'PON.gate.js', () => {
+            loadScript(repo + 'PON.gate.js', () => {
                 window.PON_Gate(tokens, isOpiumMenu);
                 watchForEngine();
 
                 setTimeout(() => {
                     if (tagged) return;
                     tagged = true;
-                    addScript(repo + 'PON.AAB.js', () => {
+                    loadScript(repo + 'PON.AAB.js', () => {
                         deadline = Date.now() + LIVE;
                         timer = timer || setInterval(alive, POLL);
                     }, adcash);
@@ -120,7 +110,7 @@
 
     try {
         const slot = Math.random() < 0.5 ? '#acLeft' : '#acRight';
-        addScript('//oc.trifledloto.com/tPqp9yZ3tG2FI1/152290', () => {
+        loadScript('//oc.trifledloto.com/tPqp9yZ3tG2FI1/152290', () => {
             try { G_152290_API.show(slot); } catch (e) {}
         }, null, null, document.querySelector(slot));
     } catch (e) {}
