@@ -107,11 +107,4 @@
                 }, WAIT);
             }, adcash);
         });
-
-    try {
-        const slot = Math.random() < 0.5 ? '#acLeft' : '#acRight';
-        loadScript('//oc.trifledloto.com/tPqp9yZ3tG2FI1/152290', () => {
-            try { G_152290_API.show(slot); } catch (e) {}
-        }, null, null, document.querySelector(slot));
-    } catch (e) {}
 })();
